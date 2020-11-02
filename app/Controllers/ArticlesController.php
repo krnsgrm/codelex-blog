@@ -7,6 +7,7 @@ use App\Models\Comment;
 use App\Services\ArticleServices\CreateArticleService;
 use App\Services\ArticleServices\DeleteArticleService;
 use App\Services\ArticleServices\ShowArticleService;
+
 //use App\Services\ArticleServices\IndexArticleService;
 
 class ArticlesController
@@ -51,8 +52,7 @@ class ArticlesController
 
         $comments = [];
 
-        foreach ($commentsQuery as $comment)
-        {
+        foreach ($commentsQuery as $comment) {
             $comments[] = new Comment(
                 $comment['id'],
                 $comment['article_id'],

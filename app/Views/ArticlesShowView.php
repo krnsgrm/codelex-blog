@@ -8,12 +8,6 @@
 </p>
 <hr>
 <p>
-
-</p>
-<hr>
-
-<hr>
-<p>
     <?php if(!empty($comments)): ?>
 
         <?php foreach($comments as $comment): ?>

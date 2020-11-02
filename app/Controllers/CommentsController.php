@@ -6,17 +6,16 @@ class CommentsController
 {
     public function store(array $vars)
     {
-        $articleId = (int) $vars['id'];
+        $articleId = (int)$vars['id'];
 
         query()
             ->insert('comments')
             ->setValue('article_id', '?')
-            ->setValue('name','?')
+            ->setValue('name', '?')
             ->setValue('comment', '?')
             ->setParameter(0, $articleId)
             ->setParameter(1, $_POST['name'])
             ->setParameter(2, $_POST['comment'])
-
             ->execute();
 
         header('Location: /articles/' . $articleId);
@@ -24,7 +23,7 @@ class CommentsController
 
     public function delete(array $vars)
     {
-        $articleId = (int) $vars['id'];
+        $articleId = (int)$vars['id'];
 
         query()
             ->delete('comments')

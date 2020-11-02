@@ -32,7 +32,7 @@ function query(): QueryBuilder
     return database()->createQueryBuilder();
 }
 
-$dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
+$dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) {
     $namespace = '\App\Controllers\\';
 
     $r->addRoute('GET', '/', $namespace . 'ArticlesController@index');
