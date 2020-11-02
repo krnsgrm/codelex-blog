@@ -6,10 +6,11 @@ use Doctrine\DBAL\Query\QueryBuilder;
 
 require_once 'vendor/autoload.php';
 
+session_start();
+
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
-// TODO Make this look better
 function database(): Connection
 {
     $connectionParams = [
@@ -38,10 +39,23 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
 
     $r->addRoute('GET', '/articles', $namespace . 'ArticlesController@index');
     $r->addRoute('GET', '/articles/{id}', $namespace . 'ArticlesController@show');
+    $r->addRoute('DELETE', '/articles/{id}', $namespace . 'ArticlesController@delete');
+    $r->addRoute('POST', '/articles', $namespace . 'ArticlesController@create');
+    $r->addRoute('GET', '/articles/create/', $namespace . 'ArticlesController@getCreated');
+
+    $r->addRoute('POST', '/articles/{id}/comments', $namespace . 'CommentsController@store');
+    $r->addRoute('DELETE', '/articles/{id}/comments/{comment_id}', $namespace . 'CommentsController@delete');
+
+    $r->addRoute('GET', '/register', $namespace . 'RegisterController@showRegistrationForm');
+    $r->addRoute('POST', '/register', $namespace . 'RegisterController@register');
+
+    $r->addRoute('GET', '/login', $namespace . 'LoginController@showLoginForm');
+    $r->addRoute('POST', '/login', $namespace . 'LoginController@login');
+    $r->addRoute('POST', '/logout', $namespace . 'LoginController@logout');
 });
 
 // Fetch method and URI from somewhere
-$httpMethod = $_SERVER['REQUEST_METHOD'];
+$httpMethod = $_POST['_method'] ?? $_SERVER['REQUEST_METHOD'];
 $uri = $_SERVER['REQUEST_URI'];
 
 // Strip query string (?foo=bar) and decode URI
